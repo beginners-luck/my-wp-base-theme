@@ -1,0 +1,662 @@
+//  ##
+//  # The base styles for gravity form forms.
+//  # Gravity Forms CSS Targeting Examples: https://docs.gravityforms.com/css-targeting-examples/
+//  # Styling Radio Buttons: https://bryntum.com/blog/3-ways-to-style-radio-buttons-with-modern-css/
+//  # Styling Number Fields: https://laracasts.com/discuss/channels/laravel/customize-increment-arrows-on-input-of-type-number-using-css
+//  #
+
+// Change the color of the calendar icon to white
+// .ui-datepicker-trigger {
+//     filter: brightness(0) invert(1);
+// }
+
+#ui-datepicker-div {
+    font-size: 14px;
+    
+    .ui-datepicker-month,
+    .ui-datepicker-year {
+        font-size: 14px;
+    }
+
+    .ui-datepicker-calendar {
+        th, td {
+            span, a {
+                font-size: 14px; 
+            }
+        }
+    }
+}
+
+body {
+    .gform_confirmation_message {
+        color: $gf-label-color;
+    }
+    // Contains the entire gravity form.
+    .gform_wrapper {
+        text-align: left;
+
+        h2 {
+            // Title
+            margin-bottom: 30px;
+        }
+
+        .gform_heading {
+            .gform_description {
+                margin-bottom: $content-element-bottom-spacing;
+            }
+            // "*" indicates required form field
+            .gform_required_legend {
+                display: block;
+                margin-bottom: $content-element-bottom-spacing;
+
+                span {
+                    color: $gf-label-color;
+                }
+            }
+        }
+
+        form {
+            background-color: transparent;
+            padding: 0;
+            border: none;
+        }
+
+        // "*" indicates required form field
+        .gform_required_legend {
+            display: none;
+        }
+
+        // Contains only form input (excludes submit button)
+        .gform_body {
+            .gform_fields {
+                // Container around
+                .gfield {
+                    margin-bottom: 30px;
+
+                    // Container around complex inputs (like Name, Address, etc)
+                    .ginput_complex {
+                        label {
+                            color: $gf-description-font-color;
+                            font: $gf-description-font-style;
+                        }
+
+                        .gform-field-label {
+                            margin-bottom: 8px;
+                        }
+                    }
+
+                    .gfield_description {
+                        color: $gf-description-font-color;
+                    }
+
+                    .gfield_label {
+                        font: $gf-label-font-style;
+                        color: $gf-label-color;
+                        border-bottom: 0; // To remove underline on radio and checkbox list items
+
+                        .gfield_required {
+                            color: $gf-field-required;
+                            font: $gf-label-font-style;
+                        }
+                    }
+
+                    //#
+                    //  Field Styles
+                    //#
+                    // Text Input Field, Name, Email, Phone, Paragraph Text, Dropdown (does not style dropdown list)
+                    input[type="text"],
+                    input[type="email"],
+                    input[type="tel"],
+                    input[type="number"],
+                    input[type="url"],
+                    textarea {
+                        font: $gf-input-font-style !important;
+                        border: $gf-border-style;
+                        border-radius: $gf-border-radius;
+                        padding: $gf-input-field-padding;
+                        line-height: 1;
+                        background-color: $gf-input-bkg-color;
+
+                        @include transition;
+                        &:focus {
+                            border: 1px solid $gf-accent-color;
+                            box-shadow: 0 0 0 4px rgba($gf-accent-color, 0.2);
+                        }
+
+                        &:hover {
+                            border: 1px solid $gf-accent-color;
+                            cursor: pointer;
+
+                            & + .selectric-items {
+                                border: 1px solid $gf-accent-color;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+
+                    input,
+                    textarea {
+                        &::placeholder {
+                            color: $gf-placeholder-font-color;
+                        }
+                    }
+
+                    // Container around list items (excluding label)
+                    &.gfield--type-radio,
+                    &.gfield--type-checkbox {
+                        .gfield_label {
+                            margin-bottom: 24px;
+                        }
+                    }
+                    .gfield_radio,
+                    .gfield_checkbox {
+                        label {
+                            font: $gf-input-font-style;
+                            line-height: 1.5;
+                        }
+                        // Container aorund individual gravity form radio list item (used for each checks and radio buttons)
+                        .gchoice {
+                            position: relative; // This way the radio button/checkbox can be positioned correctly
+
+                            &:not(:last-child) {
+                                margin-bottom: 24px;
+                            }
+
+                            .gform-field-label {
+                                &:hover {
+                                    cursor: pointer !important;
+                                }
+                            }
+                        }
+
+                        input[type="radio"] {
+                            // Disabling original browser/native styles
+                            appearance: none;
+                            margin-right: 25px;
+
+                            &:hover {
+                                cursor: pointer !important;
+                            }
+
+                            // Background of radio button
+                            &::before {
+                                content: "";
+                                position: absolute;
+                                top: 55%;
+                                transform: translateY(-50%);
+                                border-radius: 50%;
+                                background-color: $gf-radio-check-bkg-color;
+                                border: $gf-border-style;
+                                left: 0;
+                                width: 20px;
+                                height: 20px;
+                            }
+
+                            // "Checked" styling
+                            &::after {
+                                @include transition(all, 0.4s, ease-in-out);
+                                content: "";
+                                position: absolute;
+                                top: 55%;
+                                transform: translateY(-50%);
+                                border-radius: 50%;
+
+                                //reveal only when checked
+                                opacity: 0;
+
+                                background-color: $gf-radio-check-color;
+                                left: 6px;
+                                width: 10px;
+                                height: 10px;
+                            }
+
+                            &:checked {
+                                &::after {
+                                    opacity: 1;
+                                    @include transition(all, 0.4s, ease-in-out);
+                                }
+
+                                &::before {
+                                    border: 1px solid $gf-accent-color;
+                                    box-shadow: 0 0 0 4px
+                                        rgba($gf-accent-color, 0.2);
+                                }
+                            }
+                        }
+
+                        input[type="checkbox"] {
+                            // Disabling original browser/native styles
+                            appearance: none;
+                            margin-right: 25px;
+
+                            &:hover {
+                                cursor: pointer !important;
+                            }
+
+                            // Background of checkbox button
+                            &::before {
+                                content: "";
+                                position: absolute;
+                                top: 55%;
+                                transform: translateY(-50%);
+                                background-color: $gf-radio-check-bkg-color;
+                                border: $gf-border-style;
+                                border-radius: $gf-border-radius;
+                                left: 0;
+                                width: 20px;
+                                height: 20px;
+                            }
+
+                            // "Checked" styling
+                            &::after {
+                                @include transition(all, 0.4s, ease-in-out);
+                                content: "\e904";
+                                font-size: 18px;
+                                font-family: $icon-font;
+                                position: absolute;
+                                top: 4px;
+                                left: 2px;
+                                // transform: translateY(-50%);
+
+                                //reveal only when checked
+                                opacity: 0;
+
+                                color: $gf-radio-check-color;
+                                width: 10px;
+                                height: 10px;
+                            }
+
+                            &:checked {
+                                &::after {
+                                    opacity: 1;
+                                    @include transition(all, 0.4s, ease-in-out);
+                                }
+                                &::before {
+                                    box-shadow: 0 0 0 4px
+                                        rgba($gf-accent-color, 0.2);
+                                    border: 1px solid $gf-accent-color;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Submit Button Area
+        .gform_footer {
+            padding: 0 !important;
+
+            input[type="submit"] {
+                border: none;
+                margin: auto;
+            }
+        }
+
+        // Error/Validation Message Styles
+        &.gravity-theme {
+            .gform_validation_errors {
+                border: none;
+                border-top: 2px solid $gf-error-red;
+                border-bottom: 2px solid $gf-error-red;
+                border-radius: 0px;
+                padding: 20px;
+                text-align: center;
+                background-color: transparent;
+                box-shadow: none;
+                margin-bottom: 50px;
+
+                h2 {
+                    font-family: $primary-font;
+                    font-weight: bold;
+                    font-size: 20px;
+                    line-height: 1.5;
+                    color: $gf-error-red;
+                }
+
+                span.gform-icon.gform-icon--circle-error {
+                    display: none;
+                }
+            }
+
+            .ginput_container_time {
+                max-width: 100px;
+                min-width: 100px;
+
+                .selectric-wrapper {
+                    width: 100%;
+                }
+
+                &.gfield_time_ampm  {
+                    max-width: 110px;
+                    min-width: 110px;
+                }
+            }
+        }
+
+        [aria-invalid="true"] {
+            border: 1px solid $gf-error-red !important;
+        }
+
+        .gform_body .gform_fields .gfield_error .validation_message {
+            color: $gf-error-red;
+            border: none;
+            background-color: transparent;
+            margin: 0px;
+            padding-left: 0;
+            padding-bottom: 0;
+        }
+    }
+}
+
+
+// #ui-datepicker-div {
+//     font-size: 14px;
+    
+//     .ui-datepicker-month,
+//     .ui-datepicker-year {
+//         font-size: 14px;
+//     }
+
+//     .ui-datepicker-calendar {
+//         th, td {
+//             span, a {
+//                 font-size: 14px; 
+//             }
+//         }
+//     }
+// }
+
+// body {
+//     .gform_confirmation_message {
+//         color: $gf-label-color;
+//     }
+//     // Contains the entire gravity form.
+//     .gform_wrapper {
+//         text-align: left;
+
+//         h2 {
+//             // Title
+//             margin-bottom: 30px;
+//         }
+
+//         .gform_heading {
+//             .gform_description {
+//                 margin-bottom: $content-element-bottom-spacing;
+//             }
+//             // "*" indicates required form field
+//             .gform_required_legend {
+//                 display: block;
+//                 margin-bottom: $content-element-bottom-spacing;
+//             }
+//         }
+
+//         form {
+//             background-color: transparent;
+//             padding: 0;
+//             border: none;
+//         }
+
+//         // "*" indicates required form field
+//         .gform_required_legend {
+//             display: none;
+//         }
+
+//         // Contains only form input (excludes submit button)
+//         .gform_body {
+//             .gform_fields {
+//                 // Container around
+//                 .gfield {
+//                     margin-bottom: 30px;
+
+//                     // Container around complex inputs (like Name, Address, etc)
+//                     .ginput_complex {
+//                         label {
+//                             color: $gf-description-font-color;
+//                             font: $gf-description-font-style;
+//                         }
+//                     }
+
+//                     .gfield_description {
+//                         color: $gf-description-font-color;
+//                     }
+
+//                     .gfield_label {
+//                         font: $gf-label-font-style;
+//                         color: $gf-label-color;
+//                         border-bottom: 0; // To remove underline on radio and checkbox list items
+
+//                         .gfield_required {
+//                             color: $gf-field-required;
+//                             font: $gf-label-font-style;
+//                         }
+//                     }
+
+//                     //#
+//                     //  Field Styles
+//                     //#
+//                     // Text Input Field, Name, Email, Phone, Paragraph Text, Dropdown (does not style dropdown list)
+//                     input[type="text"],
+//                     input[type="email"],
+//                     input[type="tel"],
+//                     input[type="number"],
+//                     input[type="url"],
+//                     textarea {
+//                         font: $gf-input-font-style !important;
+//                         border: $gf-border-style;
+//                         border-radius: $gf-border-radius;
+//                         padding: $gf-input-field-padding;
+//                         line-height: 1;
+//                         background-color: $gf-input-bkg-color;
+
+//                         @include transition;
+//                         &:focus {
+//                             border: 1px solid $gf-accent-color;
+//                             box-shadow: 0 0 0 4px rgba($gf-accent-color, 0.1);
+//                         }
+
+//                         &:hover {
+//                             border: 1px solid $gf-accent-color;
+//                             cursor: pointer;
+
+//                             & + .selectric-items {
+//                                 border: 1px solid $gf-accent-color;
+//                                 cursor: pointer;
+//                             }
+//                         }
+//                     }
+
+//                     input,
+//                     textarea {
+//                         &::placeholder {
+//                             color: $gf-placeholder-font-color;
+//                         }
+//                     }
+
+//                     // Container around list items (excluding label)
+//                     .gfield_radio,
+//                     .gfield_checkbox {
+//                         label {
+//                             font: $gf-input-font-style;
+//                             line-height: 1.5;
+//                         }
+//                         // Container aorund individual gravity form radio list item (used for each checks and radio buttons)
+//                         .gchoice {
+//                             position: relative; // This way the radio button/checkbox can be positioned correctly
+//                             .gform-field-label {
+//                                 &:hover {
+//                                     cursor: pointer !important;
+//                                 }
+//                             }
+//                         }
+
+//                         input[type="radio"] {
+//                             // Disabling original browser/native styles
+//                             appearance: none;
+//                             margin-right: 2.5rem;
+
+//                             &:hover {
+//                                 cursor: pointer !important;
+//                             }
+
+//                             // Background of radio button
+//                             &::before {
+//                                 content: "";
+//                                 position: absolute;
+//                                 top: 55%;
+//                                 transform: translateY(-50%);
+//                                 border-radius: 50%;
+//                                 background-color: $gf-radio-check-bkg-color;
+//                                 border: $gf-border-style;
+//                                 left: 0;
+//                                 width: 1.8rem;
+//                                 height: 1.8rem;
+//                             }
+
+//                             // "Checked" styling
+//                             &::after {
+//                                 @include transition(all, 0.4s, ease-in-out);
+//                                 content: "";
+//                                 position: absolute;
+//                                 top: 55%;
+//                                 transform: translateY(-50%);
+//                                 border-radius: 50%;
+
+//                                 //reveal only when checked
+//                                 opacity: 0;
+
+//                                 background-color: $gf-radio-check-color;
+//                                 left: 0.4rem;
+//                                 width: 1rem;
+//                                 height: 1rem;
+//                             }
+
+//                             &:checked {
+//                                 &::after {
+//                                     opacity: 1;
+//                                     @include transition(all, 0.4s, ease-in-out);
+//                                 }
+
+//                                 &::before {
+//                                     border: 1px solid $gf-accent-color;
+//                                     box-shadow: 0 0 0 4px
+//                                         rgba($gf-accent-color, 0.1);
+//                                 }
+//                             }
+//                         }
+
+//                         input[type="checkbox"] {
+//                             // Disabling original browser/native styles
+//                             appearance: none;
+//                             margin-right: 2.5rem;
+
+//                             &:hover {
+//                                 cursor: pointer !important;
+//                             }
+
+//                             // Background of checkbox button
+//                             &::before {
+//                                 content: "";
+//                                 position: absolute;
+//                                 top: 55%;
+//                                 transform: translateY(-50%);
+//                                 background-color: $gf-radio-check-bkg-color;
+//                                 border: $gf-border-style;
+//                                 border-radius: $gf-border-radius;
+//                                 left: 0;
+//                                 width: 1.8rem;
+//                                 height: 1.8rem;
+//                             }
+
+//                             // "Checked" styling
+//                             &::after {
+//                                 @include transition(all, 0.4s, ease-in-out);
+//                                 content: "\e901";
+//                                 font-size: 18px;
+//                                 font-family: $icon-font;
+//                                 position: absolute;
+//                                 top: 9px;
+//                                 left: -1px;
+//                                 // transform: translateY(-50%);
+
+//                                 //reveal only when checked
+//                                 opacity: 0;
+
+//                                 color: $gf-radio-check-color;
+//                                 width: 10px;
+//                                 height: 10px;
+//                             }
+
+//                             &:checked {
+//                                 &::after {
+//                                     opacity: 1;
+//                                     @include transition(all, 0.4s, ease-in-out);
+//                                 }
+//                                 &::before {
+//                                     box-shadow: 0 0 0 4px
+//                                         rgba($gf-accent-color, 0.1);
+//                                     border: 1px solid $gf-accent-color;
+//                                 }
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+
+//         // Submit Button Area
+//         .gform_footer {
+//             padding: 0 !important;
+
+//             input[type="submit"] {
+//                 border: none;
+//                 margin: auto;
+//             }
+//         }
+
+//         // Error/Validation Message Styles
+//         &.gravity-theme {
+//             .gform_validation_errors {
+//                 border: none;
+//                 border-top: 2px solid $gf-error-red;
+//                 border-bottom: 2px solid $gf-error-red;
+//                 border-radius: 0px;
+//                 padding: 20px;
+//                 text-align: center;
+//                 background-color: transparent;
+//                 box-shadow: none;
+//                 margin-bottom: 50px;
+
+//                 h2 {
+//                     font-family: $primary-font;
+//                     font-weight: bold;
+//                     font-size: 1.8rem;
+//                     line-height: 1.5;
+//                     color: $gf-error-red;
+//                 }
+
+//                 span.gform-icon.gform-icon--circle-error {
+//                     display: none;
+//                 }
+//             }
+
+//             .ginput_container_time {
+//                 max-width: 100px;
+//                 min-width: 100px;
+//             }
+//         }
+
+//         [aria-invalid="true"] {
+//             border: 1px solid $gf-error-red !important;
+//         }
+
+//         .gform_body .gform_fields .gfield_error .validation_message {
+//             color: $gf-error-red;
+//             border: none;
+//             background-color: transparent;
+//             margin: 0px;
+//             padding-left: 0;
+//             padding-bottom: 0;
+//         }
+//     }
+// }

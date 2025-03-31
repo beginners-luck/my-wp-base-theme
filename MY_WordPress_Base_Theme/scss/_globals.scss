@@ -1,0 +1,579 @@
+//  ##
+//  # Global styles include styles that are applied to every page
+//  # regardless of template, post, page, etc. Separate from baseline
+//  # in that global are more site dependent in their styling.
+//
+//  SECTIONS
+//     > Lazy Load Images
+//     > Focus Indicator
+//     > WP Content
+//          > iframe
+//          > hr
+//          > spacing
+//          > ol/ul lists
+//          > default inline links
+//          > centering content
+//     > Buttons
+//     > Backgrounds & Dark Background Settings
+//     > Adjustable/Aspect Ratio Images
+//     > Icons
+//     > Popup
+//     > Layouts
+//
+
+
+//#
+//  Lazy Load Images
+//#
+.lazy {
+    filter: blur(10px); 
+    @include transition(filter, 0.4s, ease-in);
+
+    &.loaded {
+        filter: blur(0);
+    }
+}
+
+//#
+// WP-Content (general editor settings)
+//#
+// TODO 
+hr {
+    border: none; 
+    border-top: solid 1px lightgray;
+}
+
+.wp-content {
+    iframe {
+        aspect-ratio: 16 / 9;
+        width: 100%;
+        height: max-content;
+    }
+
+    blockquote {
+        margin: 0;
+        border-left: 4px solid lightgray;
+        padding: 16px 0 16px 30px; 
+    }
+
+    // spacing between content elements
+    > :not(:last-child) {
+        margin-bottom: $content-element-bottom-spacing;
+    }
+
+    > :last-child {
+        margin-bottom: 0; 
+    }
+
+    .wp-caption-text {
+        margin: 32px 0 0 0;
+    }
+
+    // Lists (ol/ul)
+    ul, ol {
+        li {
+            &:not(:last-child) {
+                margin-bottom: 16px;
+            }
+
+            &::marker {
+                // color: $cyan; 
+            }
+        }
+    }
+}
+
+// Default inline links
+//  TODO 
+#content {
+    .wp-content {
+        a:not(.button) {
+            position: relative;
+            &:link,
+            &:visited {
+                color: red;
+
+                &::before {
+                    // Link underline
+                    @include transition;
+                    @include pseudo-element-base(
+                        0%,
+                        1px,
+                        red,
+                        auto
+                    ); // auto is the default for top
+                    bottom: 0;
+                }
+            }
+
+            &:active,
+            &:hover {
+                text-decoration: none;
+                color: red;
+
+                &::before {
+                    // link underline
+                    @include transition;
+                    width: 100%;
+                }
+            }
+
+            &:focus {
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+// centering content
+.centered-content {
+    text-align: center; 
+
+    .button {
+        margin: auto; 
+    }
+
+    p {
+        .button:not(:last-child) {
+            margin-right: $content-element-bottom-spacing;
+        }
+    }
+}
+
+
+
+//#
+//  Spacing & Padding
+//#
+@mixin section-spacing-rules($section-space, $bkg-section-space) {
+    #content {
+        > div {
+            // spacing between section elements
+            > div {
+                margin-bottom: $section-space;
+            }
+
+            // rules for spacing between the header and first element
+            &:first-child {
+                margin-top: $section-space;
+            }
+        }
+    
+        #page-builder-container{
+            > div {
+                margin-bottom: $section-space;
+            }
+            
+            .call-to-action-block + .content-block, 
+            .color_1-background + .content-block {
+                &.call-to-action-block,
+                &.color_1-background {
+                    margin-top: -$section-space;
+                }
+            }
+            .content-block:last-child {
+                &.call-to-action-block,
+                &.color_1-background {
+                    margin-bottom: 0;
+                }
+            }
+            .color_1-background + .color_1-background {
+                padding-top: calc($section-space - $bkg-section-space) !important;
+            }
+        }
+    }
+}
+
+.no-margin-lr {
+    margin-left: 0; 
+    margin-right: 0; 
+}
+
+.margin-lr {
+    margin-left: $mobile-spacing;
+    margin-right: $mobile-spacing;
+}
+
+.container {
+    > div {
+        margin-left: $mobile-spacing; 
+        margin-right: $mobile-spacing; 
+    }
+}
+
+
+@include section-spacing-rules($section-bottom-spacing, $bkg-section-spacing);
+
+// Mobile spacing rules (typically applied when menu becomes mobile menu
+@media screen and (max-width: 1165px) { 
+    @include section-spacing-rules($mobile-section-bottom-spacing, $mobile-bkg-section-spacing);
+}
+
+
+//#
+//  Buttons
+//#
+//  TODO 
+p {
+    // For buttons that are side by side
+    a {
+        &.button:not(:last-child) {
+            margin-right: $content-element-bottom-spacing;
+        }
+
+        &.button {
+            display: inline-block;
+        }
+    }
+}
+
+@mixin base-button {
+    // general button styles
+    border-radius: 120px;
+    padding: 16px 32px;
+    display: block;
+    letter-spacing: 1.28px;
+    max-width: max-content;
+    font-family: $primary-font;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 16px;
+    overflow: hidden;
+    background-color: transparent;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    } 
+}
+
+@mixin blue-button { // with icon
+    // specific button style
+    color: orange;
+    background-color: blue;
+    border: 2px solid blue;
+    padding-top: 8px; 
+    &:hover {
+        background-color: red;
+        border-color: red;
+        color: green; 
+    }
+
+    &::after {
+        color: orange; 
+        margin-left: 8px; 
+        content: '\e90b'; 
+        display: inline-block; 
+        font-family: $icon-font;
+        font-size: 22px; 
+        @include transition(all, 0.2s, ease-in-out);
+    }
+    
+}
+
+// NOTE - need to include both base-button and specific button in request (for now,  TODO )
+// NOTE - Why does including base-buton in specific button style, then remove base-button include below, then break the centering of buttons and double line buttons?
+a, span {
+    &.button {
+        @include base-button(); 
+
+        &.blue {
+            @include blue-button; 
+        }
+    }
+}
+
+input[type="submit"], .gform_button {
+    @include base-button; 
+    @include blue-button; 
+    @include transition; 
+    margin: auto; 
+}
+
+// buttons to full width (on mobile) and stacking side by side buttons
+@media screen and (max-width: 500px) {
+    p {
+        a, span {
+            &.button {
+                display: block;
+                width: 100%;
+                max-width: none;
+    
+                &:not(:last-child) {
+                    margin-right: 0 !important;
+                    margin-bottom: 16px !important;
+                }
+            }
+        }
+    }
+
+    .wp-content {
+        a.button, span.button {
+            max-width: none;
+        }
+    }
+}
+
+
+//#
+//  Backgrounds & Dark Background Settings
+//#
+//  TODO 
+.color_1-background {
+    padding: 85px 0;
+    background-color: rgba(red, 0.1);
+}
+
+// .color_2-background {
+//     padding: 85px 0;
+//     background-color: rgba(red, 0.1);
+// }
+
+.dark-background {
+	h1, .h1, 
+	h2, .h2,
+	h3, .h3,
+	h4, .h4, 
+	h5, .h5, 
+	h6, .h6
+	p {
+		color: hotpink; 
+	}
+}
+
+
+//#
+//  Adjustable/Aspect Ratio Images
+//#
+// TODO  
+// This aspect ration mixin doesn't work
+@mixin aspect-ratio($width, $height, $max-width) {
+    // Mixin called in .image-wrapper to set size of image
+    aspect-ratio: calc($width / $height);
+    max-width: $max-width;
+}
+
+.image-wrapper {
+    // wraps around background-image or aspect
+    position: relative;
+    overflow: hidden;
+    border-radius: 0;
+    // flex-shrink: 0; // avoid stretch horizontally
+    // align-self: start; // avoid stretch vertically
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+.aspect-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+//#
+//  Icons (Icomoon)
+//#
+//  TODO  paste from icomoon style.css file
+
+
+//#
+//  Popup
+//#
+// TODO  - put x in top right corner??? Put x in right corner just above the box???
+#html5box-html5-lightbox {
+    #html5-lightbox-overlay {
+        background-color: green !important;
+        // opacity: 0.6;
+    }
+
+    .html5lightbox-div {
+        padding: 30px;
+    }
+
+    .html5-image {
+        overflow: hidden !important;
+    }
+
+    #html5-close {
+        margin: -42px 0 0 0 !important;
+
+        &:hover, 
+        &:focus-visible {
+            &::before {
+                color: blue; 
+            }
+            &:after {
+                border: 2px solid blue; 
+                color: blue;
+            }
+        }
+
+        img {
+            visibility: hidden;
+        }
+
+        &::before {
+            content: "\e908"; // TODO  replace X
+            @include transition; 
+            font-family: $icon-font;
+            color: red;
+            font-size: 18px;
+            background-color: transparent;
+            position: absolute;
+            right: 0px;
+            top: 1px;
+            width: 35px;
+            rotate: 45deg;
+            height: 35px;
+        }
+        
+        // border
+        &::after {
+            @include transition; 
+            content: ""; 
+            color: red;
+            background-color: transparent;
+            border: 2px solid red; 
+            position: absolute;
+            right: 50%;
+            top: 50%;
+            transform: translate(50%, -50%);
+            width: 35px;
+            height: 35px;
+        }
+    }
+}
+
+//#
+//  Layouts
+//#
+// Grid
+$base-grid-gap: 32px; 
+[class*="grid--"] {
+    display: grid;
+    gap: $base-grid-gap;
+    &.grid--2-cols {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    &.grid--3-cols {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    &.grid--4-cols {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    [class*="grid--"] {
+        &.grid--3-cols {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        &.grid--4-cols {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+}
+
+@media screen and (max-width: 672px) {
+    [class*="grid--"] {
+        &.grid--3-cols, &.grid--2-cols {
+            grid-template-columns: 1fr;
+        }
+
+        &.grid--4-cols {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+}
+
+// @media screen and (max-width: 992px) {
+//     [class*="grid--"] {
+//         &.grid--4-cols {
+//             grid-template-columns: 1fr;
+
+//             img {
+//                 width: 100%;
+//             }
+//         }
+//     }
+// }
+
+// Flex 
+// TODO  - add columns and mobile styling (flex allows centering of grid rows unlike grid)
+$base-flex-gap: 32px;
+[class*="flex--"] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $base-flex-gap;
+    justify-content: center;
+
+    // width = calc(100% / <num-cols> - ((<gap> * (<num-cols> - 1)) / <num-cols>))
+    &.flex--2-cols {
+        > div {
+            width: calc(100% / 2 - (($base-flex-gap * 1) / 2));
+        }
+    }
+    &.flex--3-cols {
+        > div {
+            width: calc(100% / 3 - (($base-flex-gap * 2) / 3));
+        }
+    }
+    &.flex--8-cols { // logos
+        > img, 
+        > div {
+            width: calc(100% / 8 - (($base-flex-gap * 7) / 8));
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+    [class*="flex--"] {
+        // width = calc(100% / <num-cols> - ((<gap> * (<num-cols> - 1)) / <num-cols>))
+        &.flex--3-cols {
+            > div {
+                width: calc(100% / 2 - (($base-flex-gap * 1) / 2));
+            }
+        }
+        &.flex--8-cols {
+            > img,
+            > div {
+                width: calc(100% / 4 - (($base-flex-gap * 3) / 4));
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 672px) {
+    [class*="flex--"] {
+        // width = calc(100% / <num-cols> - ((<gap> * (<num-cols> - 1)) / <num-cols>))
+        &.flex--2-cols, 
+        &.flex--3-cols {
+            > div {
+                width: calc(100% / 1 - (($base-flex-gap * 0) / 1));
+            }
+        }
+        &.flex--8-cols {
+            > img,
+            > div {
+                width: calc(100% / 2 - (($base-flex-gap * 1) / 2));
+            }
+        }
+    }
+}

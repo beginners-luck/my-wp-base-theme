@@ -1,0 +1,160 @@
+ TODO  Tasks to complete.
+ NOTE: You may want to create and fill ACF fields by page.
+
+ - Add necessary plugins (ACF, ACF Options page, Gravity Forms, wplightbox, classic editor, ajax thumbnail rebuild, post cloner)
+ - Fill out style.css
+ - Create files for single.php, archive.php, templates.php
+ - Set up ACF (make the label the same as the name). Can reference labels from WP Pages rather than ACF plugin.
+ - Create image sizes in functions.php (double image size)
+ - Add logo.svg, logo-icon.svg (footer), logo.svg (nav), site-login-logo.svg, screenshot.png (1200 x 900)
+ - Add Favicon (Favicon.png)
+ - Add loading screen animation (loading.svg)
+ - Add filler photos, pdfs, audio files to media library
+ - Add content to ACF fields before tackling the page development
+ - Add content to CPTs
+ - Link live sass compiler (settings > change base directory)
+ - Fill in all variables in (variables.scss)
+ - Update baseline.scss
+    - Import fonts (from zeplin) (baseline.scss) 
+    - Import heading styles (from zeplin) (baseline.scss)
+    - Create psuedo heading classes (.h2) and .dark-background effects
+ - Update globals.scss
+    - Create and download icomoon(fontello) icons (take classes and add to globals.scss, add import to baseline.scss)
+
+ Do Mobile Styles by Section! (I know how much you love them 😂)
+ - Create & style default template 
+ - Create & style 404 page
+ - Create template-partials, scss mixin, helper functions (update file)
+ - Create page-builder elements (if applicable)
+ - Work on like things at the same time rather than going page by page (i.e. Do all headers at the same time)
+ - Complete CPTs before moving to the pages
+ - Complete page templates 
+
+
+ Make the following additions: 
+ - ensure buttons work with shift click inside a paragraph
+ - flexbox responsive grid 
+   - allows for centering a row, unlike grid
+   - can have gap
+   - need to set item widths based on spacing between grid, and columns 
+      - width = calc(100% / <num-cols> - ((<gap> * (<num-cols> - 1)) / <num-cols>))
+   - reference pam didner news page
+- add read more template and code reference 
+   - ex on pam didner site
+- taxonomy example 
+   - ex pam didner site
+- search example
+   - same page results and using search form
+   - using John's function.php thing
+   - ex pam didner
+- responsive tabs example
+   - https://github.com/jellekralt/Responsive-Tabs
+   - ex pam didner 
+- Fix left and right images + content
+   - Add image wrapper (so images are perfect ratio)
+   - Add percent to content side and image side (should add to 100%?)
+   - Align items center the image wrapper so it's vertically centered and not stretching to height (or align start if you want to be top aligned)
+   - Update mobile styles with these changes 
+- Add mixin for button like john does, but place global style for button with mixin on globals.scss
+- swiper example (because these things always mess me up)
+   - Example with all/the most common variables
+- Call to action banner example 
+- Clean up background iamge, image wrapper, and aspect image
+- Clean up functions in helper so that generate_image can work with pulling featured images 
+   - and any other function that uses an image
+- Create a mixin for a background overlay solid color
+- Create a mixin for a background overlay gradient (direction, color one, color two)
+- Do all the Standard & Advanced gravity form fields (Create form template file so you don't have to constantly make one)
+   - Single Line Text
+   - Paragraph Text
+   - Dropdown
+   - Number
+   - Checkboxes
+   - Radio Buttons
+   - HTML
+   - Section 
+   - Multiple Pages
+   - Name
+   - Date
+   - Time
+   - Phone
+   - Email
+   - Address
+   - Website
+   - Email
+   - File Upload
+   - Multi File Upload
+   - List
+   - Multi select
+   - Consent 
+- Create page builder template
+
+Fixing WP Theme
+   X selectric add in the up/down feature (Martin’s Roofing)
+   X gf add in the hover, effects (Martin’s roofing)
+   X gf add in the required indicator, do some light styling 
+   X gf increase width on calendar and time element 
+   X gf increase the popup calendar ui (FCPSTC)
+   X Footer social media icons repeater ACF, Style, HTML
+   X 404 add in correct text for 404 content so I don’t have to change it each time
+   X allow the gravity form to refresh after submission (idk how John fixed this)
+   X add in remove script (from Steven) in functions.php
+   X Fix alert bar ACF, Style, HTML
+   X Create easy sticky header
+   * rewrite selectric and gf helper css to be cleaner
+   X choose one animation plugin
+   X fix accessibility of menu with accordion dropdowns (fixed this on one of my sites...)
+   * create base page builder template items (widgets (cards & icons), slider, etc)
+   * ensure the selectric height works when there is text and when there is not (and in address gf field)
+   * style more gravity form fields
+   * set up default multi-page form styles
+   X remove bootstrap (js and css)
+   X remove outdated/unnecessary js 
+      - fastclick is not necessary after 2015 most browsers removed this delay
+   X setup my own containers so that they don't jump from one width to the next, but glide smoothly??? (understandably the jumping from width to width is so that you don't have to style for each width)
+   X create auto padding for system for mobile???
+   X update jquery version
+   X add blur to lazy loaded images
+   * get working example page builder and elements
+   X fix wp_title in default header
+   * change admin email so I don't get all the plugin update emails
+
+ TODO  Create blueprint in Local to reduce the amount of plugin downloads and all that jazz
+
+ TODO  Create a very basic template that I can grab code off of/use as my basetheme!
+
+
+// How to Fix Page Builder Load Speeds
+// First, PLEASE check what happens when you delay initiallization for WYSIWYG to make sure there is actually a difference on the page builder, lol. 
+// goal: Delay Initialization of WYSIWYG editor fields and then use a lazy scroll method to initialize them as you get to them when scrolling
+
+// How to call script in wp-admin
+// SOlution: https://stackoverflow.com/questions/66830101/wordpress-how-to-add-javascript-to-wp-admin
+// Get $hook of the current admin page to load the script on
+$screen = get_current_screen(); 
+print_r($screen);
+// WP Docs Page for admin_enqueue_scripts
+https://developer.wordpress.org/reference/hooks/admin_enqueue_scripts/
+
+// Trigger initialization of ACF WYSIWYG element by simulating the mousedown event (the mousedown event is the only event acf registers)
+// #wp-acf-editor-665f2c9a75712-wrap would need to be swapped with the actual field id
+// Solution: https://stackoverflow.com/questions/18610661/cannot-fire-a-mousedown-event-with-jquery/18631561#18631561
+var e1 = document.createEvent("MouseEvents");
+e1.initMouseEvent("mousedown", true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+$('#wp-acf-editor-665f2c9a75712-wrap.acf-editor-wrap.delay')[0].dispatchEvent(e1);
+
+// Failed Solutions to Simulate mousedown
+$('#wp-acf-editor-665f2c9a75712-wrap.acf-editor-wrap.delay')[0].dispatchEvent(new Event('mousedown')); // <- don't know why
+$('#wp-acf-editor-665f2c9a75712-wrap.acf-editor-wrap.delay').trigger('mousedown'); // <- because the event listener was not created with .on() (I think)
+
+// How will the lazy loading work?
+// ACF field will load/initialize when the div first enters the viewing window (or is 100px or so from entering the window)
+// The ACF field will only be loaded once, so nothing will happen when leaving the viewing window/or reentering the viewing window
+// I could also consider loading WYSIWYG when a user opens a dropdown on the page builder (since I allows users to collapse sections 
+// so it's easier to load the page). When a user opens a dropdown I would use the same loading method (i.e. div must be just coming 
+// into view) or I could load all the WYSIWYG fields in the opened dropdown, even if they aren't in view.
+// Solution to check for div in view: https://stackoverflow.com/questions/8114611/check-if-div-is-viewable-in-window
+
+// New lazy loading script to use for images
+http://jquery.eisbehr.de/lazy/
+
