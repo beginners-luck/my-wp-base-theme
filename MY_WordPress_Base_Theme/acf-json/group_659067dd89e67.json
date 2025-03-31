@@ -1,0 +1,445 @@
+{
+    "key": "group_659067dd89e67",
+    "title": "Page Builder",
+    "fields": [
+        {
+            "key": "field_659067dde7a50",
+            "label": "Build Your Page",
+            "name": "build_your_page",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Build out your web page by choosing from a list of pre-designed blocks below. You can reorganize these blocks by dragging and dropping them, delete by clicking the minus sign, add by clicking the plus sign, or duplicate by holding shift and clicking the plus sign.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_6590682ee7a51",
+            "button_label": "Add Block",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_6590682ee7a51",
+                    "label": "Block Type",
+                    "name": "block_type",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "content": "Content",
+                        "two_column_content": "Two Column Content",
+                        "left_right_content_image": "Left\/Right Content + Image",
+                        "call_to_action_banner": "Call to Action Banner",
+                        "multi_column_cards": "Multi Column Cards",
+                        "multi_column_icon_widget": "Multi Column Widgets",
+                        "accordions": "Accordions",
+                        "testimonial_slider": "Testimonial Slider"
+                    },
+                    "default_value": "content",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "parent_repeater": "field_659067dde7a50"
+                },
+                {
+                    "key": "field_65906fa0e7a52",
+                    "label": "Content Block",
+                    "name": "content_block",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "A block which allows the user to place any content, including text, links, headings, buttons, forms, images, videos, etc.",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_6590682ee7a51",
+                                "operator": "==",
+                                "value": "content"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "tabs": "all",
+                    "toolbar": "full",
+                    "media_upload": 1,
+                    "delay": 0,
+                    "parent_repeater": "field_659067dde7a50"
+                },
+                {
+                    "key": "field_659080ef63cf7",
+                    "label": "Two Column Content Block",
+                    "name": "two_column_content_block",
+                    "aria-label": "",
+                    "type": "repeater",
+                    "instructions": "A block of content which displays two columns of content.",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_6590682ee7a51",
+                                "operator": "==",
+                                "value": "two_column_content"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "min": 2,
+                    "max": 2,
+                    "collapsed": "",
+                    "button_label": "Add Column",
+                    "rows_per_page": 20,
+                    "sub_fields": [
+                        {
+                            "key": "field_659081549cdc7",
+                            "label": "Content",
+                            "name": "content",
+                            "aria-label": "",
+                            "type": "wysiwyg",
+                            "instructions": "A column of content.",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "tabs": "all",
+                            "toolbar": "full",
+                            "media_upload": 1,
+                            "delay": 0,
+                            "parent_repeater": "field_659080ef63cf7"
+                        }
+                    ],
+                    "parent_repeater": "field_659067dde7a50"
+                },
+                {
+                    "key": "field_65906fb0e7a53",
+                    "label": "Left\/Right Content + Image Block",
+                    "name": "left_right_content_image_block",
+                    "aria-label": "",
+                    "type": "clone",
+                    "instructions": "A block of content which displays an image to the left or right of content.",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_6590682ee7a51",
+                                "operator": "==",
+                                "value": "left_right_content_image"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "clone": [
+                        "group_659048eca3016"
+                    ],
+                    "display": "group",
+                    "layout": "block",
+                    "prefix_label": 0,
+                    "prefix_name": 0,
+                    "parent_repeater": "field_659067dde7a50"
+                },
+                {
+                    "key": "field_65906ff7e7a54",
+                    "label": "Call to Action Banner Block",
+                    "name": "call_to_action_banner_block",
+                    "aria-label": "",
+                    "type": "clone",
+                    "instructions": "A block of content which displays a banner that stands out from the other content on the page. Used to call users to do some action.",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_6590682ee7a51",
+                                "operator": "==",
+                                "value": "call_to_action_banner"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "clone": [
+                        "group_6590646f4275a"
+                    ],
+                    "display": "group",
+                    "layout": "block",
+                    "prefix_label": 0,
+                    "prefix_name": 0,
+                    "parent_repeater": "field_659067dde7a50"
+                },
+                {
+                    "key": "field_6590750368b91",
+                    "label": "Multi Column Cards Block",
+                    "name": "multi_column_cards_block",
+                    "aria-label": "",
+                    "type": "repeater",
+                    "instructions": "A block of content which displays a list of cards users can click on to interact with.",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_6590682ee7a51",
+                                "operator": "==",
+                                "value": "multi_column_cards"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "min": 0,
+                    "max": 3,
+                    "collapsed": "",
+                    "button_label": "Add Card",
+                    "rows_per_page": 20,
+                    "sub_fields": [
+                        {
+                            "key": "field_6590752168b92",
+                            "label": "Widget",
+                            "name": "widget",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_659073fb1db8f"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0,
+                            "parent_repeater": "field_6590750368b91"
+                        },
+                        {
+                            "key": "field_6590753e68b93",
+                            "label": "Widget Link",
+                            "name": "widget_link",
+                            "aria-label": "",
+                            "type": "url",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "parent_repeater": "field_6590750368b91"
+                        }
+                    ],
+                    "parent_repeater": "field_659067dde7a50"
+                },
+                {
+                    "key": "field_65907de407944",
+                    "label": "Multi Column Icon Widgets Block",
+                    "name": "multi_column_icon_widgets_block",
+                    "aria-label": "",
+                    "type": "repeater",
+                    "instructions": "A block of content which displays a list of cards users can click on to interact with.",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_6590682ee7a51",
+                                "operator": "==",
+                                "value": "multi_column_icon_widget"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "",
+                    "button_label": "Add Widget",
+                    "rows_per_page": 20,
+                    "sub_fields": [
+                        {
+                            "key": "field_65907e3707945",
+                            "label": "Widget",
+                            "name": "widget",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_659073fb1db8f"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0,
+                            "parent_repeater": "field_65907de407944"
+                        }
+                    ],
+                    "parent_repeater": "field_659067dde7a50"
+                },
+                {
+                    "key": "field_65907e9d07946",
+                    "label": "Accordions Block",
+                    "name": "accordions_block",
+                    "aria-label": "",
+                    "type": "clone",
+                    "instructions": "A block of content resembling a FAQs accordion. Creates a list of clickable dropdowns users can expand to see more information about the topic.",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_6590682ee7a51",
+                                "operator": "==",
+                                "value": "accordions"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "clone": [
+                        "group_65907ed0cd1cb"
+                    ],
+                    "display": "group",
+                    "layout": "block",
+                    "prefix_label": 0,
+                    "prefix_name": 0,
+                    "parent_repeater": "field_659067dde7a50"
+                },
+                {
+                    "key": "field_659082059cdc8",
+                    "label": "Testimonials Slider Block",
+                    "name": "testimonials_slider_block",
+                    "aria-label": "",
+                    "type": "repeater",
+                    "instructions": "A block of content that displays a number of customer testimonials in a slider or carousel.",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_6590682ee7a51",
+                                "operator": "==",
+                                "value": "testimonial_slider"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "",
+                    "button_label": "Add Row",
+                    "rows_per_page": 20,
+                    "sub_fields": [
+                        {
+                            "key": "field_65a2babfef2ce",
+                            "label": "Testimonial",
+                            "name": "testimonial",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_6590825e2e271"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 0,
+                            "parent_repeater": "field_659082059cdc8"
+                        }
+                    ],
+                    "parent_repeater": "field_659067dde7a50"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "default"
+            },
+            {
+                "param": "page_type",
+                "operator": "!=",
+                "value": "front_page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1743443306
+}

@@ -1,0 +1,464 @@
+//  ##
+//  # Baseline styles contain the base styles for the entire website.
+//  # Baselines styles are set to match with any site and any edits
+//  # made to the file are done in the beginning, and then it is pretty
+//  # much left alone. Base styles can be modified by global styles.
+//
+//  SECTIONS
+//  > Font Imports
+// 	> Font Variables
+// 	> Color Variables
+// 	> Mixins
+// 	> Body & HTML Setup
+// 		> Paragraph/body text Styles
+// 		> Headings & Formats
+// 		> Layout Containers
+// 		> Other stuff...
+//
+@use "sass:map";
+
+//#
+//	Font Imports
+//#
+//  TODO
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+// Icomoon
+//  TODO - Pulled from icomoon font download style.css file
+// NOTE: Need to make sure all file srcs are '../fonts/icomoon.eot?4dlf59'
+@font-face {
+    font-family: 'icomoon';
+    src:  url('../fonts/icomoon.eot?go52ql');
+    src:  url('../fonts/icomoon.eot?go52ql#iefix') format('embedded-opentype'),
+      url('../fonts/icomoon.woff2?go52ql') format('woff2'),
+      url('../fonts/icomoon.ttf?go52ql') format('truetype'),
+      url('../fonts/icomoon.woff?go52ql') format('woff'),
+      url('../fonts/icomoon.svg?go52ql#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
+
+//#
+//	Mixins
+//#
+@mixin transition($property: all, $duration: 0.4s, $easing: ease-in-out) {
+    -webkit-transition: $property $duration $easing;
+    -moz-transition: $property $duration $easing;
+    -ms-transition: $property $duration $easing;
+    -o-transition: $property $duration $easing;
+    transition: $property $duration $easing;
+}
+
+@mixin transform($transforms) {
+    -moz-transform: $transforms;
+    -o-transform: $transforms;
+    -ms-transform: $transforms;
+    -webkit-transform: $transforms;
+    transform: $transforms;
+}
+
+@mixin rotate($degrees) {
+    -webkit-transform: rotate($degrees);
+    -moz-transform: rotate($degrees);
+    -ms-transform: rotate($degrees);
+    -o-transform: rotate($degrees);
+    transform: rotate($degrees);
+}
+
+@mixin prefixer($property, $value, $prefixes: webkit) {
+    @each $prefix in $prefixes {
+        #{"-" + $prefix + "-" + $property}: $value;
+    }
+    #{$property}: $value;
+}
+
+@mixin translate($x, $y) {
+    @include transform(translate($x, $y));
+}
+
+@mixin align-center {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+    align-content: center;
+}
+
+@mixin pseudo-element-base(
+    $width: 100%,
+    $height: 100%,
+    $bkg-color: red,
+    $top: 0,
+    $left: 0,
+    $content: " "
+) {
+    position: absolute;
+    content: $content;
+    width: $width;
+    height: $height;
+    background-color: $bkg-color;
+    top: $top;
+    left: $left;
+}
+
+// Use Case Example:
+// 	.container {
+// 		position: relative;
+//
+// 		// Linear gradient overlay
+// 		&::after {
+// 			@include linear-gradient-overlay;
+// 		}
+// 	}
+@mixin linear-gradient-overlay($colorTop: rgba(0, 0, 0, 0.6), $colorBottom: rgba(0, 0, 0, 0.6)) {
+    content: " ";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(
+        to bottom,
+        $colorTop,
+        $colorBottom
+    );
+}
+
+// Adds a flat corner to a shape.
+// Called like: @include flat-corners('top left', 'top right');
+@mixin flat-corners($corners...) {
+	$size: 30px;
+	$corner-settings: ( // initial defaults
+		'top left' : 0 0,
+		'top right' : 100% 0,
+		'bottom right' : 100% 100%,
+		'bottom left' : 0 100%,
+	);
+
+	@each $corner in $corners {
+		$new-setting: map.get((
+			'top left' : (0 $size, $size 0),
+			'top right' : (calc(100% - $size) 0, 100% $size),
+			'bottom right' : (100% calc(100% - $size), calc(100% - $size) 100%),
+			'bottom left' : ($size 100%, 0 calc(100% - $size)),
+		), $corner );
+
+		$corner-settings: map.set($corner-settings, $corner, $new-setting);
+	}
+
+	clip-path: polygon(
+		map.get($corner-settings, 'top left'),
+		map.get($corner-settings, 'top right'),
+		map.get($corner-settings, 'bottom right'),
+		map.get($corner-settings, 'bottom left')
+	);
+}
+
+@mixin padding-tb($px) {
+    padding-top: $px;
+    padding-bottom: $px;
+}
+
+//#
+// Body & HTML setup
+//#
+#full-height {
+    display: none;
+}
+
+body {
+    // background-color: #000;
+}
+
+body,
+html {
+    height: 100%;
+}
+
+ol,
+ul {
+    margin: 0;
+}
+
+// Paragraph/body text Styles
+//  TODO
+body {
+    color: red;
+    font: 20px/30px $primary-font; //font-size/line-height
+    p {
+        margin: 0;
+    }
+    &.nav-menu-open {
+        position: fixed;
+        overflow: hidden;
+        left: 0px;
+        right: 0px;
+    }
+}
+
+// Headings & Formats
+//  TODO
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6
+p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+// Layout Containers
+//  TODO
+.container {
+    // General container size
+    max-width: calc(1168px + $mobile-spacing + $mobile-spacing);
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    *zoom: 1;
+    min-width: 0;
+
+    // Modified containers
+    &.container-968 {
+        max-width: calc(968px + $mobile-spacing + $mobile-spacing);
+    }
+    &.container-1040 {
+        max-width: calc(1040px + $mobile-spacing + $mobile-spacing);
+    }
+}
+
+.container-fluid {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    *zoom: 1;
+    width: 100%;
+    max-width: 2000px;
+    min-width: 250px;
+}
+
+// TODO
+#loader {
+    background-color: red;
+    display: flex;
+    align-content: center;
+    position: fixed;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    justify-content: center;
+    opacity: 1;
+    z-index: 1000000;
+    @include transition(opacity, 0.5s, ease-out);
+
+    .loading-icon {
+        width: 90px;
+        height: auto;
+        display: block;
+    }
+
+    &.loader-hide {
+        opacity: 0;
+    }
+}
+
+#preload * {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+}
+
+.wrap {
+    position: relative;
+    margin: 0 auto 0; /* bottom is negative value of .push height (usually) */
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+}
+
+::-moz-selection {
+    // Code for Firefox */
+    color: $selection-text-color;
+    background: $selection-bkg-color;
+}
+
+::selection {
+    color: $selection-text-color;
+    background: $selection-bkg-color;
+}
+
+:focus {
+    outline: none;
+}
+
+:focus-visible {
+    outline: 2px solid blue;
+    opacity: 1 !important;
+    outline-offset: 5px;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+    outline: none;
+}
+
+::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+::-webkit-input-placeholder {
+    color: $gf-placeholder-font-color;
+}
+
+:-moz-placeholder {
+    // Firefox 18- */
+    color: $gf-placeholder-font-color;
+    opacity: 1;
+}
+
+::-moz-placeholder {
+    // Firefox 19+ */
+    color: $gf-placeholder-font-color;
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+    color: $gf-placeholder-font-color;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="submit"],
+textarea,
+select {
+    -webkit-appearance: none;
+    border-radius: 0px;
+}
+
+a,
+input[type="submit"] {
+    @include transition(all, 300ms, ease-in-out);
+    &:hover {
+        @include transition(all, 300ms, ease-in-out);
+    }
+}
+
+img {
+    max-width: 100%;
+    &.alignright {
+        float: right;
+        margin: 0 0 1em 1em;
+    }
+    &.alignleft {
+        float: left;
+        margin: 0 1em 1em 0;
+    }
+    &.aligncenter {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+.alignright {
+    float: right;
+}
+.alignleft {
+    float: left;
+}
+.aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+img {
+    max-width: 100%;
+    &:not([src]) {
+        visibility: hidden;
+    }
+    &.alignright {
+        float: right;
+        margin: 0 0 1em 1em;
+    }
+    &.alignleft {
+        float: left;
+        margin: 0 1em 1em 0;
+    }
+    &.aligncenter {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+.alignright {
+    float: right;
+}
+.alignleft {
+    float: left;
+}
+.aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media screen and (max-width: 767px) {
+    img {
+        &.alignright,
+        &.alignleft {
+            float: none;
+            display: block;
+            margin: 0 auto 30px;
+        }
+    }
+    .alignright,
+    .alignleft {
+        float: none;
+        margin: 0 auto 30px;
+    }
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+    font-family: $icon-font !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.animsition-loading {
+    border: none;
+    -webkit-animation-iteration-count: none;
+    animation-iteration-count: none;
+    -webkit-animation-timing-function: none;
+    animation-timing-function: none;
+    -webkit-animation-duration: 0s;
+    animation-duration: 0s;
+    -webkit-animation-name: none;
+    animation-name: none;
+    width: 60px;
+}
+
+@media screen and (max-width: 768px) {
+    .animatedParent .animated {
+        @include prefixer(transition-property, none !important);
+        @include prefixer(animation, none !important);
+        @include transform(none !important);
+        opacity: 1;
+    }
+}

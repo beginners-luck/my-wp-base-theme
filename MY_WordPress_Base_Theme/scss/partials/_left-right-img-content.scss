@@ -1,0 +1,53 @@
+//  TODO 
+// Left/Right Image, Left/Right Content
+#content {
+    .one-photo-content-row {
+        display: flex;
+        gap: 132px;
+        justify-content: space-between;
+        @include align-center;
+    
+        .image-wrapper {
+            aspect-ratio: 470 / 460;
+            max-width: 470px; // TODO 
+            width: 50%; //  TODO 
+            // flex-shrink: 0; // aligns horizontally 
+            // align-self: flex-start; // might mess with align center (aligns vertically)
+        }
+    
+        &.photo-left {
+            flex-direction: row-reverse;
+        }
+    }
+}
+
+@media screen and (max-width: 990px) {
+    #content {
+        .one-photo-content-row {
+            gap: 64px;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #content {
+        .one-photo-content-row {
+            flex-wrap: wrap;
+            flex-direction: column-reverse;
+            gap: 32px;
+    
+            &.photo-left {
+                flex-direction: column-reverse;
+            }
+            
+            .image-container {
+                width: 100%; 
+            }
+    
+            .image-wrapper {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    }
+}

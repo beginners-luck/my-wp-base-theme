@@ -1,0 +1,24 @@
+#content {
+        .call-to-action-block {
+            padding-top: $bkg-section-spacing;
+            padding-bottom: $bkg-section-spacing;
+            position: relative;
+            min-height: 504px;
+            display: flex;
+            text-align: center; 
+            @include align-center; 
+
+            &::before {
+                @include linear-gradient-overlay; 
+            }
+
+            .wp-content {
+                a.button {
+                    margin: auto; 
+                }
+                .button-wrapper a.button:not(:last-child) {
+                    margin-right: calc($content-element-bottom-spacing / 2);
+                }
+            }
+        }
+}
